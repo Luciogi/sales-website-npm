@@ -84,8 +84,8 @@ interface TrafficData {
   Year: any;
   Traffic: any; // Adjust the properties according to your JSON structure
 }
-export async function getServerSideProps() {
-  const data = await fs.readFile(process.cwd() + "/pages/data.json", "utf8");
+export async function getStaticProps() {
+  const data = await fs.readFile(process.cwd() + "/public/data.json", "utf8");
   const json: any = Object.values(JSON.parse(data));
 
   // Collect unique years
