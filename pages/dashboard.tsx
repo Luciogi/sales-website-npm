@@ -7,7 +7,11 @@ const ApexCharts = dynamic(() => import("react-apexcharts"), {
   ssr: false, // Ensure ApexCharts is not imported during SSR
 });
 
-export default function Dashboard({ years, traffic }) {
+type MyComponentProps = {
+  years: number[];
+  traffic: any; // Replace 'any' with the actual type of 'traffic' if known
+};
+export default function Dashboard({ years, traffic }: MyComponentProps) {
   const [trafficPerYear, setTrafficPerYear] = useState({
     options: {
       chart: {
@@ -25,10 +29,11 @@ export default function Dashboard({ years, traffic }) {
     ],
   });
 
+  const labels = years.map((year) => year.toString());
   const [state, setState] = useState({
     series: traffic,
     options: {
-      labels: years,
+      labels: labels,
     },
   });
   return (
@@ -74,28 +79,32 @@ export default function Dashboard({ years, traffic }) {
     </>
   );
 }
-
+interface TrafficData {
+  [key: string]: any;
+  Year: any;
+  Traffic: any; // Adjust the properties according to your JSON structure
+}
 export async function getServerSideProps() {
   const data = await fs.readFile(process.cwd() + "/data.json", "utf8");
-  const json = Object.values(JSON.parse(data));
+  const json: any = Object.values(JSON.parse(data));
 
   // Collect unique years
-  let years = new Set();
-  Object.values(json).map((e) => {
-    years.add(e.Year);
+  let years_set = new Set();
+  Object.values(json).map((e: any) => {
+    years_set.add(e.Year);
   });
 
   // Collect total traffic by year
-  let traffic_per_year = {};
-  years.forEach((year) => {
+  let traffic_per_year: any = {};
+  years_set.forEach((year: any) => {
     traffic_per_year[year] = json
-      .filter((row) => row.Year === year)
-      .reduce((res, value) => {
+      .filter((row: any) => row.Year === year)
+      .reduce((res: any, value: any) => {
         return res + value.Traffic;
       }, 0);
   });
 
-  years = Array.from(years); // Convert to Array
+  const years = Array.from(years_set); // Convert to Array
   const traffic = Object.values(traffic_per_year);
 
   console.log(years);

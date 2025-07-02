@@ -1,10 +1,11 @@
 import { Nav } from "./navbar";
 import Foot from "./footer";
+type MyComponentProps = React.PropsWithChildren<{}>;
 
-export default function Layout({ children }) {
+export default function Layout({ children }: MyComponentProps) {
   return (
     <>
-      <main class="md:container md:mx-auto">
+      <main className="md:container md:mx-auto">
         <Nav />
         <main>{children}</main>
         <Foot />
@@ -12,4 +13,3 @@ export default function Layout({ children }) {
     </>
   );
 }
-
