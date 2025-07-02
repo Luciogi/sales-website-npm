@@ -31,7 +31,7 @@
   "dataRoutes": [
     {
       "page": "/dashboard",
-      "dataRouteRegex": "^/_next/data/YV8sKi5uY1at3EIMvc\\-eQ/dashboard\\.json$"
+      "dataRouteRegex": "^/_next/data/E386bC00WYF61haZhsVPC/dashboard\\.json$"
     }
   ],
   "rsc": {
